@@ -12,6 +12,8 @@ CXXEXEC = $(CXXSRC:.cpp=)
 
 all: $(CEXEC) $(CXXEXEC)
 
+# we will always recompile all the testcases
+
 # Rule to compile each .c file into its own executable
 %: %.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BIN)/$@ $<
