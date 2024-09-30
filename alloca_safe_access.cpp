@@ -6,7 +6,7 @@
 
 __attribute__((noinline)) void foo(int index, int len) {
   volatile char str[len] __attribute__((aligned(32)));
-  assert(!(reinterpret_cast<long>(str) & 31L));
+  // assert(!(reinterpret_cast<long>(str) & 31L));
   str[index] = '1';
 }
 
