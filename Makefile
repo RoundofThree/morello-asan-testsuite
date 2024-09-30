@@ -2,7 +2,7 @@ CC := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang
 CXX := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang++
 CFLAGS	:= -fsanitize=address -O0 -ggdb -fno-omit-frame-pointer -Xclang -cheri-bounds=subobject-safe
 LDFLAGS	:= -fuse-ld=lld
-ASANFLAGS := -mllvm -asan-globals=0
+ASANFLAGS := -mllvm -asan-globals=0 -mllvm -asan-opt-cheri-stack=1
 
 BIN=build
 
