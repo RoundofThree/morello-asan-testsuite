@@ -2,6 +2,7 @@ CC := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang
 CXX := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang++
 CFLAGS	:= -fsanitize=address -O0 -ggdb -fno-omit-frame-pointer -Xclang -cheri-bounds=subobject-safe
 LDFLAGS	:= -fuse-ld=lld
+ASANFLAGS := -mllvm -asan-globals=0
 
 BIN=build
 
@@ -16,11 +17,11 @@ all: $(CEXEC) $(CXXEXEC)
 
 # Rule to compile each .c file into its own executable
 %: %.c
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BIN)/$@ $<
+	$(CC) $(CFLAGS) $(ASANFLAGS) $(LDFLAGS) -o $(BIN)/$@ $<
 
 # Rule to compile each .cpp file into its own executable
 %: %.cpp
-	$(CXX) $(CFLAGS) $(LDFLAGS) -o $(BIN)/$@ $<
+	$(CXX) $(CFLAGS) $(ASANFLAGS) $(LDFLAGS) -o $(BIN)/$@ $<
 
 clean:
 	rm -f build/*
