@@ -1,5 +1,5 @@
-CC := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang
-CXX := $(HOME)/cheri/output/morello-sdk/utils/cheribsd-morello-purecap-clang++
+CC := $(HOME)/cheri/output/morello-sdk/bin/clang
+CXX := $(HOME)/cheri/output/morello-sdk/bin/clang++
 CFLAGS	:= -fsanitize=address -O0 -ggdb -fno-omit-frame-pointer -Xclang -cheri-bounds=subobject-safe
 LDFLAGS	:= -fuse-ld=lld
 ASANFLAGS := -mllvm -asan-globals=0 -mllvm -asan-opt-cheri-stack=1
@@ -11,7 +11,17 @@ CXXSRC = $(wildcard *.cpp)
 CEXEC = $(CSRC:.c=)
 CXXEXEC = $(CXXSRC:.cpp=)
 
+HYBRID_FLAGS := --config $(HOME)/cheri/output/morello-sdk/bin/cheribsd-morello-hybrid-for-purecap-rootfs.cfg
+PURECAP_FLAGS := --config $(HOME)/cheri/output/morello-sdk/bin/cheribsd-morello-purecap.cfg
+
 all: $(CEXEC) $(CXXEXEC)
+
+all-hybrid: CFLAGS += $(HYBRID_FLAGS)
+all-hybrid: all
+
+all-purecap: CFLAGS += $(PURECAP_FLAGS)
+all-purecap: all
+
 
 # we will always recompile all the testcases
 
